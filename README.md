@@ -12,10 +12,10 @@ Docker Compose based network / host monitoring stack. All services run in contai
 
 This is a lightweight, containerized network and host monitoring stack. It monitors network devices (like MikroTik RouterOS, Cisco etc.) and SNMP-enabled Linux servers (interface traffic, system resources, device health) as well as the Docker host itself (CPU, memory, disk via Node Exporter). Prometheus collects all metrics in one time-series database, and Grafana visualizes them as dashboards and graphs.
 
-### 1.2. Architecture illustration (placeholder)
+### 1.2. Architecture illustration
 
 ![Architecture — who scrapes whom](architecture.jpg)
-*Figure placeholder: service dependency / scrape-flow diagram (to be added by the author).*
+*Figure placeholder: service dependency / scrape-flow diagram*
 
 ### 1.3. Prerequisites
 
