@@ -1,0 +1,88 @@
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+        labels:
+          host: 'docker-host'
+  - job_name: 'snmp'
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+      auth: [public_v2]
+    static_configs:
+      - targets: ['192.168.53.6']
+        labels:
+          device: 'MT_BIURO'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+    scrape_interval: 60s
+    scrape_timeout: 55s
+  - job_name: 'snmp-mikrotik'
+    metrics_path: /snmp
+    params:
+      module: [mikrotik]
+      auth: [public_v2]
+    static_configs:
+      - targets: ['192.168.53.6']
+        labels:
+          device: 'MT_BIURO'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+    scrape_interval: 60s
+    scrape_timeout: 55s
+  - job_name: 'snmp-linux'
+    metrics_path: /snmp
+    params:
+      module: [ucd_la_table, ucd_memory, ucd_system_stats]
+      auth: [public_v2]
+    static_configs:
+      - targets: ['192.168.53.139']
+        labels:
+          host: 'serwer-linux-snmp'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+    scrape_interval: 60s
+    scrape_timeout: 55s
+  - job_name: 'snmp-routeros'
+    metrics_path: /snmp
+    params:
+      module: [routeros]
+      auth: [public_v2]
+    static_configs:
+      - targets: ['192.168.53.6']
+        labels:
+          device: 'MT_RTR'
+      - targets: ['192.168.53.1']
+        labels:
+          device: 'MT_RTR'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+    scrape_interval: 60s
+    scrape_timeout: 55s
