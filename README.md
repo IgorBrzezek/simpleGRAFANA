@@ -105,10 +105,10 @@ Prometheus uses a **pull model**: nothing pushes to it; Prometheus scrapes HTTP 
 
 ```text
                           SNMP (UDP 161)
-  ┌──────────────┐  GET/WALK  ┌───────────────┐  GET /snmp?module=..&target=..  ┌────────────┐  PromQL  ┌─────────┐
+  ┌──────────────┐  GET/WALK  ┌───────────────┐  GET /snmp?module=..&target=.. ┌────────────┐  PromQL   ┌─────────┐
   │ MikroTik /   │◄───────────│ snmp-exporter │◄───────────────────────────────│ prometheus │◄──────────│ grafana │
-  │ RouterOS,    │            │    :9116      │         every 60 s              │   :9090    │  HTTP API │  :3000  │
-  │ Linux SNMP   │            └───────────────┘                               └────────────┘           └─────────┘
+  │ RouterOS,    │            │    :9116      │         every 60 s             │   :9090    │  HTTP API │  :3000  │
+  │ Linux SNMP   │            └───────────────┘                                └────────────┘           └─────────┘
   └──────────────┘                                                                    ▲
                                                                                       │ GET /metrics every 15 s
                                               host /proc,/sys                         │
